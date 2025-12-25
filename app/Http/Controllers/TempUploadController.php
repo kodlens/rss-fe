@@ -3,31 +3,49 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TempUploadController extends Controller
 {
-    
-
     /** Applicationn Letter upload HANDLING */
     /* ================= */
-    public function tempUploadApplicationLetter(Request $req){
+    public function tempUploadFile(Request $request)
+    {
+        $allowedFields = ['application_letter', 'pds', 'diploma', 'tor'];
 
-        $req->validate([
-            'application_letter' => ['required', 'mimes:pdf', 'max:1024']
-        ],[
-            'application_letter.max' => 'The upload field must not be greater than 1MB in size.'
+        $field = collect($allowedFields)->first(fn ($f) => $request->hasFile($f));
+
+        if (!$field) {
+            return response()->json([
+                'message' => 'No valid upload field provided.'
+            ], 422);
+        }
+
+        $request->validate([
+            $field => ['required', 'mimes:pdf', 'max:1024'],
+        ], [
+            "$field.max" => 'The upload field must not be greater than 1MB in size.',
         ]);
 
-        $file = $req->application_letter;
-        $fileGenerated = md5($file->getClientOriginalName() . time());
-        $imageName = $fileGenerated .'_'. pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . '.' . $file->getClientOriginalExtension();
-        $imagePath = $file->storeAs('public/temp-upload', $imageName);
-        $n = explode('/', $imagePath);
-        return $n[2];
+        $file = $request->file($field);
+
+        $hash = md5($file->getClientOriginalName() . microtime(true));
+        $name = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $ext  = $file->getClientOriginalExtension();
+
+        $filename = "{$hash}_{$name}.{$ext}";
+
+        // Store explicitly on the private disk
+        $path = $file->storeAs('temp-upload', $filename, 'local');
+
+        return response()->json([
+            'path' => $path,
+            'filename' => $filename,
+        ]);
     }
 
-    public function removeUpload($fileName){
-       
+
+    public function tempRemoveFile($fileName){
         if(Storage::exists('public/temp-upload/' .$fileName)) {
             Storage::delete('public/temp-upload/' . $fileName);
             return response()->json([

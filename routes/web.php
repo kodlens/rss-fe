@@ -35,7 +35,8 @@ TEMP Upload Routes
 These routes are responsible for managing temporary upload
 =================================*/
 
-Route::post('/temp-upload', [App\Http\Controllers\TempUploadController::class, 'tempUploadApplicationLetter']);
+Route::post('/temp-upload', [App\Http\Controllers\TempUploadController::class, 'tempUploadFile']);
+Route::post('/temp-remove/{file}', [App\Http\Controllers\TempUploadController::class, 'tempRemoveFile']);
 
 /*=============END====================*/
 

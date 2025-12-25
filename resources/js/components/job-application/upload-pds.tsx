@@ -10,7 +10,7 @@ type Props = {
   csrfToken?: string;
 }
 
-const UploadApplicationLetter: React.FC<Props> = ({ form }: Props) => {
+const UploadPds: React.FC<Props> = ({ form }: Props) => {
 
   const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
@@ -19,8 +19,8 @@ const UploadApplicationLetter: React.FC<Props> = ({ form }: Props) => {
   const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   const uploadProps: UploadProps = {
-    name: "application_letter",
-    action: "/temp-upload?type=application",
+    name: "pds",
+    action: "/temp-upload?type=pds",
     accept: "application/pdf",
     headers: {
       "X-CSRF-Token": csrfToken,
@@ -79,10 +79,10 @@ const UploadApplicationLetter: React.FC<Props> = ({ form }: Props) => {
 
   return (
     <Form.Item
-      name="application_letter"
+      name="pds"
       valuePropName="fileList"
       className="w-full"
-      label="Application Letter"
+      label="Personal Data Sheet"
       getValueFromEvent={(e) => {
         // Normalize the value to fit what the Upload component expects
         if (Array.isArray(e)) {
@@ -107,4 +107,4 @@ const UploadApplicationLetter: React.FC<Props> = ({ form }: Props) => {
   )
 }
 
-export default UploadApplicationLetter
+export default UploadPds
