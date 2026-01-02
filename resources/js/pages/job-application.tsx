@@ -1,3 +1,5 @@
+import Divider from "@/components/divider";
+import EducationalBackground from "@/components/job-application/educational-background";
 import PersonalAddress from "@/components/job-application/personal-address";
 import PersonalInfo from "@/components/job-application/personal-info";
 import UploadApplicationLetter from "@/components/job-application/upload-application-letter";
@@ -57,25 +59,34 @@ const JobApplication = ({ slug }: { slug: string }) => {
         }}
       >
 
+        <Divider text={`PERSONAL INFORMATION`} />
+
         <PersonalInfo />
 
         <PersonalAddress form={form} />
 
+        <Divider text={`EDUCATIONAL BACKGROUND`} />
+
+        <EducationalBackground />
+
+        <Divider text={`UPLOAD FILES`} />
+
         <div className="my-4 p-4 bg-blue-100">
-          <b>Instructions:</b> Compile and convert all the neccessary documents (e.g. Application Letter, Resume, Personal Data Sheet, Trainings & Certificates etc...) into PDF format. Each file must not be greater than 1MB in size.
+          <b>Instructions:</b> Compile and convert all the neccessary documents (e.g. Application Letter, Personal Data Sheet, Trainings & Certificates etc...) into PDF format. Each file must not be greater than 1MB in size.
         </div>
+        
 
-        <UploadApplicationLetter form={form}/>
+        <UploadApplicationLetter />
 
-        <UploadPds form={form}/>
+        <UploadPds />
 
-        <UploadDiploma form={form}/>
+        <UploadDiploma />
 
-        <UploadTor form={form}/>
+        <UploadTor />
 
-        <UploadRelevantTraining form={form}/>
+        <UploadRelevantTraining />
 
-        <UploadCoe form={form}/>
+        <UploadCoe />
         
         <Button htmlType="submit" type="primary">Submit</Button>
 

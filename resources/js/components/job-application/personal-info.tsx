@@ -20,7 +20,7 @@ const PersonalInfo = () => {
                 </Form.Item>
             </div>
 
-            <div className="flex gap-4 w-full">
+            <div className="flex flex-col md:flex-row md:gap-4">
                 <Form.Item
                     className="w-full"
                     label="Middle Name"
@@ -43,6 +43,24 @@ const PersonalInfo = () => {
                                 label: 'FEMALE'
                             },
                         ]} />
+                </Form.Item>
+            </div>
+
+
+            <div className="flex flex-col md:flex-row md:gap-4">
+                <Form.Item
+                    className="w-full"
+                    label="Ethnicity"
+                    rules={[{ required: true, message: 'Please input ethnicity.' }]}
+                    name="ethnicity">
+                    <Input type="text" className="w-full" placeholder="e.g. TAGALOG..." />
+                </Form.Item>
+                <Form.Item
+                    className="w-full"
+                    label="Religion"
+                    rules={[{ required: true, message: 'Please input religion.' }]}
+                    name="religion">
+                    <Input type="text" className="w-full" placeholder="e.g. ROMAN CATHOLIC" />
                 </Form.Item>
             </div>
 

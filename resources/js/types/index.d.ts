@@ -52,3 +52,15 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     statuses:Status[]
 };
 
+export interface EducationalBackground {
+    id: number;
+    level: string;
+    name_of_school: string;
+    education_program?: string;
+    year_graduated: string;
+    created_at: string;
+    updated_at: string;
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+

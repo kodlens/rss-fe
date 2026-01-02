@@ -11,7 +11,7 @@ type Props = {
   csrfToken?: string;
 }
 
-const UploadRelevantTraining: React.FC<Props> = ({ form }: Props) => {
+const UploadWorkExperienceSheet: React.FC<Props> = ({ form }: Props) => {
 
   const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
@@ -20,11 +20,11 @@ const UploadRelevantTraining: React.FC<Props> = ({ form }: Props) => {
   const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   const uploadProps: UploadProps = {
-    name: "relevant_training",
-    action: "/temp-upload?type=relevant_training",
+    name: "work_experience",
+    action: "/temp-upload?type=work_experience",
     accept: "application/pdf",
-    maxCount: 1,
     multiple: false,
+    maxCount: 1,
     headers: {
       "X-CSRF-Token": csrfToken,
     },
@@ -82,10 +82,10 @@ const UploadRelevantTraining: React.FC<Props> = ({ form }: Props) => {
 
   return (
     <Form.Item
-      name="relevant_training"
+      name="work_experience"
       valuePropName="fileList"
       className="w-full"
-      label="Relevant Training"
+      label="Transcript of Record"
       getValueFromEvent={(e) => {
         // Normalize the value to fit what the Upload component expects
         if (Array.isArray(e)) {
@@ -101,7 +101,7 @@ const UploadRelevantTraining: React.FC<Props> = ({ form }: Props) => {
           <InboxOutlined />
         </p>
         <p className="ant-upload-text">
-          Click or drag your Relevant Training here to upload
+          Click or drag your Application Letter here to upload
         </p>
         <p className="ant-upload-hint">
           Only PDF files are accepted (maximum size: 1 MB).
@@ -111,4 +111,4 @@ const UploadRelevantTraining: React.FC<Props> = ({ form }: Props) => {
   )
 }
 
-export default UploadRelevantTraining
+export default UploadWorkExperienceSheet

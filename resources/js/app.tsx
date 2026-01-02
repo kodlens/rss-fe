@@ -22,7 +22,13 @@ createInertiaApp({
 
         root.render(
             <StrictMode>
-                <ConfigProvider>
+                <ConfigProvider
+                    theme={{
+                        token: {
+                            // fontFamily: "Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+                            fontFamily: "Roboto, system-ui, sans-serif"
+                        }
+                    }}>
                     <AntApp>
                         <App {...props} />
                     </AntApp>
