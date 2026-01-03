@@ -31,51 +31,35 @@ class JobApplicationController extends Controller
 
     public function store( Request $req, $slug){
         
-        // $req->validate([
-        //     'lname' => ['required', 'string', 'max: 50'],
-        //     'fname' => ['required', 'string', 'max: 50'],
-        //     'sex' => ['required', 'string' ,'max: 15'],
-        //     'province' => ['required', 'string', 'max: 100'],
-        //     'city' => ['required', 'string', 'max: 100'],
-        //     'barangay' => ['required', 'string', 'max: 100'],
-        //     'job_position_slug' => ['required', 'string'],
-        //     'email' => ['required', 'email'],
-        //     'contact_no' => ['required', 'regex:/^(09|\+639)\d{9}$/'],
-            
-        //     // 'application_letter' => ['required', 'file', 'mimes:pdf', 'max:1024 '],
-        //     // 'pds' => ['required', 'file', 'mimes:pdf', 'max:1024 '],
-        //     // 'diploma' => ['required', 'file', 'mimes:pdf', 'max:1024 '],
-        //     // 'transcript_record' => ['required', 'file', 'mimes:pdf', 'max:1024 '],
+        $req->validate([
+            'lname' => ['required', 'string', 'max: 50'],
+            'fname' => ['required', 'string', 'max: 50'],
+            'sex' => ['required', 'string' ,'max: 15'],
+            'province' => ['required', 'string', 'max: 100'],
+            'city' => ['required', 'string', 'max: 100'],
+            'barangay' => ['required', 'string', 'max: 100'],
+            'job_position_slug' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'contact_no' => ['required', 'regex:/^(09|\+639)\d{9}$/'],
 
-        //     // 'attachment' => ['required'],
-        //     // 'diploma' => ['required'],
-        //     // 'work_ex' => ['required'],
-        //     // 'tor_link' => ['required'],
-        //     // 'application_letter' => ['required'],
-        //     // 'pds' => ['required'],
-        //     // 'cert_of_relevant_training_link' => ['required'],
+            'application_letter' => ['required'],
+            'application_letter.0.response.filename' => ['required', 'string'],
 
-        //     'application_letter' => ['required', 'file', 'mimes:pdf', 'max:1024 '],
-        //     'pds' => ['required', 'file', 'mimes:pdf', 'max:1024 '],
-        //     'diploma' => ['required', 'file', 'mimes:pdf', 'max:1024 '],
-        //     'tor' => ['required', 'file', 'mimes:pdf', 'max:1024 '],
-        //     'certificate_relevant_training' => ['mimes:pdf', 'max:1024 '],
-        //     'coe' => ['mimes:pdf', 'max:1024 '],
+            'pds' => ['required'],
+            'pds.0.response.filename' => ['required', 'string'],
 
-        // ],[
-        //     'lname.required' => 'Last Name is required.',
-        //     'fname.required' => 'First Name is required.',
-        //     // 'pds_link.required' => 'PDS link is required.',
-        //     // 'work_ex_link.required' => 'Work Experience link is required.',
-        //     // 'tor_link.required' => 'Diplome/TOR link is required.',
-        //     // 'cert_of_relevant_training_link.required' => 'Certificate of relevant training link is required.',
+            'diploma' => ['required'],
+            'diploma.0.response.filename' => ['required', 'string'],
 
-        //     'application_letter.max' => 'The application letter must not be greater than 1MB in size.',
-        //     'pds.max' => 'The pds must not be greater than 1MB in size.',
-        //     'diploma.max' => 'The diploma must not be greater than 1MB in size.',
-        //     'tor.max' => 'The TOR must not be greater than 1MB in size.',
-        //     'certificate_relevant_training.max' => 'The TOR must not be greater than 1MB in size.',
-        // ]);
+            'tor' => ['required'],
+            'tor.0.response.filename' => ['required', 'string'],
+
+        ],[
+            'lname.required' => 'Last Name is required.',
+            'fname.required' => 'First Name is required.',
+        ]);
+
+
         return $req;
         
         $jobPosition = JobPosition::with(['status_engagement'])

@@ -11,7 +11,7 @@ type Props = {
   csrfToken?: string;
 }
 
-const UploadRelevantTraining: React.FC<Props> = ({ form }: Props) => {
+const UploadRelevantTraining: React.FC<Props> = () => {
 
   const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
@@ -51,7 +51,7 @@ const UploadRelevantTraining: React.FC<Props> = ({ form }: Props) => {
 
       if (info.file.status === "done") {
         message.success(`${info.file.name} uploaded successfully`)
-        form?.setFieldValue("featured_image", info.file.response)
+        //form?.setFieldValue("featured_image", info.file.response)
 
       } else if (info.file.status === "error") {
 

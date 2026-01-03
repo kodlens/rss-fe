@@ -11,7 +11,7 @@ class TempUploadController extends Controller
     /* ================= */
     public function tempUploadFile(Request $request)
     {
-        $allowedFields = ['application_letter', 'pds', 'diploma', 'tor'];
+        $allowedFields = ['application_letter', 'pds', 'diploma', 'tor', 'relevant_training', 'coe'];
 
         $field = collect($allowedFields)->first(fn ($f) => $request->hasFile($f));
 
