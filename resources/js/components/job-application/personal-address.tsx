@@ -1,14 +1,15 @@
 import { Barangay, City, Province } from '@/types/address'
-import { Form, Select, FormInstance } from 'antd'
+import { Form, Select, FormInstance, Input, Button } from 'antd'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 type MyProps = {
   form: FormInstance;
+  handleNextButton: ()=>void
 }
 
 
-const CurrentAddress = ({ form }: MyProps) => {
+const CurrentAddress = ({ form, handleNextButton }: MyProps) => {
 
   const [provinces, setProvinces] = useState([])
   const [cities, setCities] = useState([])
@@ -46,6 +47,8 @@ const CurrentAddress = ({ form }: MyProps) => {
       setErrors(err.response?.data?.message)
     })
   }
+
+
 
   return (
     // container
@@ -99,7 +102,19 @@ const CurrentAddress = ({ form }: MyProps) => {
             </p>
             
           </div>
+          
         ) : null }
+
+        <Form.Item
+          className="w-full"
+          label="House # & Street"
+          rules={[{ required: true, message: 'Please input House no. & Street' }]}
+          name="street">
+          <Input type="text" placeholder="e.g. 123 Jose Rizal St" />
+        </Form.Item>
+
+
+        <Button onClick={handleNextButton} value={`Next`}>next</Button>
         
       </div>
       {/* form container */}

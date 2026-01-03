@@ -30,8 +30,10 @@ class JobApplicationController extends Controller
 
 
     public function store( Request $req, $slug){
-         return $req;
+        return $req->application_letter[0]['response']['filename'];
+
         $req->validate([
+
             'lname' => ['required', 'string', 'max: 50'],
             'fname' => ['required', 'string', 'max: 50'],
             'sex' => ['required', 'string' ,'max: 15'],
@@ -58,17 +60,44 @@ class JobApplicationController extends Controller
             'lname.required' => 'Last Name is required.',
             'fname.required' => 'First Name is required.',
         ]);
-
-
-       
         
         $jobPosition = JobPosition::with(['status_engagement'])
             ->where('job_position_slug', $slug)
             ->first();
 
+        JobPosition::create([
+            'job_position_id' => $jobPosition->job_position_id,
+            'job_position_slug' => $jobPosition->job_position_slug,
+            'lname' => strtoupper($req->lname),
+            'fname' => strtoupper($req->fname),
+            'mname' => strtoupper($req->mname),
+            'sex' => $req->sex,
+            'ethnicity' => $req->ethnicity,
+            'religion' => $req->religion,
+            'email' => $req->email,
+            'contact_no' => $req->contact_no,
+            'civil_status' => $req->civil_status,
+            'citizenship' => $req->citizenship,
+            'province' => $req->province,
+            'city' => $req->city,
+            'barangay' => $req->barangay,
+            'street' => $req->street,
+
+            'application_letter' => data_get($req->all(), 'application_letter.0.response.filename'),
+            'pds' => data_get($req->all(), 'pds.0.response.filename'),
+            'diploma' => data_get($req->all(), 'diploma.0.response.filename'),
+            'tor' => data_get($req->all(), 'tor.0.response.filename'),
+            'relevant_training' => data_get($req->all(), 'relevant_training.0.response.filename', ''),
+            'coe' => data_get($req->all(), 'coe.0.response.filename', ''),
+            'work_experience' => data_get($req->all(), 'work_experience.0.response.filename', ''),
+
+        ]);
 
 
-        return $jobPosition;
+
+        return response()->json([
+            'status' => 'success'
+        ], 200);
     }
 
     

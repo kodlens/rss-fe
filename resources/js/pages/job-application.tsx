@@ -18,6 +18,9 @@ const JobApplication = ({ slug }: { slug: string }) => {
 
   const [form] = Form.useForm();
 
+  const handleNextButton = () => {
+    console.log('child to parent method call')
+  }
 
   
   const items: TabsProps['items'] = [
@@ -29,7 +32,7 @@ const JobApplication = ({ slug }: { slug: string }) => {
     {
       key: '2',
       label: 'ADDRESS INFORMATION',
-      children: <CurrentAddress form={form} />,
+      children: <CurrentAddress form={form} handleNextButton={handleNextButton}/>,
     },
     {
       key: '3',
@@ -88,12 +91,13 @@ const JobApplication = ({ slug }: { slug: string }) => {
           province: '',
           city: '',
           barangay: '',
+          street: '123 Jose Rizal St.',
           job_position_slug: slug,
           agree: false
         }}
       >
 
-        <Tabs defaultActiveKey="1" items={items}  />;
+        <Tabs defaultActiveKey="1" centered animated items={items}  />
 
       </Form>
 
