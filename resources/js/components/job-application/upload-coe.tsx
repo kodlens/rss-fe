@@ -1,11 +1,15 @@
-import { Form, Upload, message } from "antd"
+import { App, Form, Upload } from "antd"
 import type { UploadProps } from "antd"
 import axios from "axios"
-import { InboxOutlined } from "@ant-design/icons";
+import { CheckOutlined, InboxOutlined } from "@ant-design/icons";
 import Dragger from "antd/es/upload/Dragger";
+import { useState } from "react";
 
 
 const UploadCoe = () => {
+
+  const { message } = App.useApp();
+  const [isUpload, setIsUpload] = useState(false)
 
   const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
@@ -42,12 +46,15 @@ const UploadCoe = () => {
 
       if (info.file.status === "done") {
         message.success(`${info.file.name} uploaded successfully`)
+        setIsUpload(true)
+
         //form?.setFieldValue("featured_image", info.file.response)
 
       } else if (info.file.status === "error") {
 
         const status = info.file.error?.status
         const errors = info.file.response?.errors
+        setIsUpload(false)
 
         if (status === 422 && errors?.featured_image?.length) {
           message.error(errors.featured_image[0])
@@ -61,6 +68,8 @@ const UploadCoe = () => {
       const tempFile = file.response
 
       if (!tempFile) return
+
+      setIsUpload(false)
 
       axios.post(`/temp-remove/${tempFile}`).then(res => {
         if (res.data.status === "temp_deleted") {
@@ -87,11 +96,17 @@ const UploadCoe = () => {
     >
       <Dragger {...uploadProps}>
         <p className="ant-upload-drag-icon">
-          <InboxOutlined />
+          { isUpload ? <CheckOutlined /> : <InboxOutlined /> }
         </p>
-        <p className="ant-upload-text">
-          Click or drag your Application Letter here to upload
-        </p>
+        { isUpload ? (
+            <p className="text-lg text-green-500">
+              File uploaded successfully
+            </p>
+          ): (
+            <p className="ant-upload-text">
+              Click or drag your Application Letter here to upload
+            </p>
+          ) }
         <p className="ant-upload-hint">
           Only PDF files are accepted (maximum size: 1 MB).
         </p>

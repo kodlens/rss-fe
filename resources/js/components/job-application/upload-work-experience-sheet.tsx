@@ -1,8 +1,8 @@
-import { Form, Upload, message } from "antd"
+import { App, Form, Upload } from "antd"
 import type { FormInstance, UploadProps } from "antd"
 import axios from "axios"
 import { useState } from "react"
-import { InboxOutlined } from "@ant-design/icons";
+import { CheckOutlined, InboxOutlined } from "@ant-design/icons";
 import Dragger from "antd/es/upload/Dragger";
 
 
@@ -11,13 +11,16 @@ type Props = {
   csrfToken?: string;
 }
 
-const UploadWorkExperienceSheet: React.FC<Props> = ({ form }: Props) => {
+const UploadWorkExperienceSheet: React.FC<Props> = () => {
+
+  const { message } = App.useApp();
+  const [isUpload, setIsUpload] = useState(false)
 
   const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
     ?.getAttribute('content') ?? ''
     
-  const [errors, setErrors] = useState<Record<string, string[]>>({});
+  //const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   const uploadProps: UploadProps = {
     name: "work_experience",
@@ -47,20 +50,21 @@ const UploadWorkExperienceSheet: React.FC<Props> = ({ form }: Props) => {
     },
 
     onChange(info) {
-      setErrors({})
 
       if (info.file.status === "done") {
         message.success(`${info.file.name} uploaded successfully`)
-        form?.setFieldValue("featured_image", info.file.response)
+        setIsUpload(true)
+
+       // form?.setFieldValue("featured_image", info.file.response)
 
       } else if (info.file.status === "error") {
 
         const status = info.file.error?.status
         const errors = info.file.response?.errors
-
-        if (status === 422 && errors?.featured_image?.length) {
-          message.error(errors.featured_image[0])
-          setErrors(errors)
+        setIsUpload(false)
+        
+        if (status === 422 && errors?.work_experience?.length) {
+          message.error(errors.work_experience[0])
         } else {
           message.error(`${info.file.name} upload failed`)
         }
@@ -71,6 +75,8 @@ const UploadWorkExperienceSheet: React.FC<Props> = ({ form }: Props) => {
       const tempFile = file.response
 
       if (!tempFile) return
+
+      setIsUpload(false)
 
       axios.post(`/temp-remove/${tempFile}`).then(res => {
         if (res.data.status === "temp_deleted") {
@@ -93,16 +99,20 @@ const UploadWorkExperienceSheet: React.FC<Props> = ({ form }: Props) => {
         }
         return e?.fileList;
       }}
-      validateStatus={errors.upload ? "error" : ""}
-      help={errors.upload ? errors.upload[0] : ""}
     >
       <Dragger {...uploadProps}>
         <p className="ant-upload-drag-icon">
-          <InboxOutlined />
+          { isUpload ? <CheckOutlined /> : <InboxOutlined /> }
         </p>
-        <p className="ant-upload-text">
-          Click or drag your Application Letter here to upload
-        </p>
+        { isUpload ? (
+            <p className="text-lg text-green-500">
+              File uploaded successfully
+            </p>
+          ): (
+            <p className="ant-upload-text">
+              Click or drag your Application Letter here to upload
+            </p>
+          ) }
         <p className="ant-upload-hint">
           Only PDF files are accepted (maximum size: 1 MB).
         </p>

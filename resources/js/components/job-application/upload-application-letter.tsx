@@ -6,8 +6,8 @@ import { useState } from "react";
 const { Dragger } = Upload;
 
 const UploadApplicationLetter = () => {
-  const { message } = App.useApp();
 
+  const { message } = App.useApp();
   
   const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
@@ -95,11 +95,11 @@ const UploadApplicationLetter = () => {
           { isUpload ? <CheckOutlined /> : <InboxOutlined /> }
         </p>
         { isUpload ? (
-            <p className="ant-upload-text text-green-700">
+            <p className="text-lg text-green-500">
               File uploaded successfully
             </p>
           ): (
-            <p>
+            <p className="ant-upload-text">
               Click or drag your Application Letter here to upload
             </p>
           ) }

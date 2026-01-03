@@ -102,11 +102,11 @@ const UploadPds = () => {
           { isUpload ? <CheckOutlined /> : <InboxOutlined /> }
         </p>
         { isUpload ? (
-            <p className="ant-upload-text text-green-700">
+            <p className="text-lg text-green-500">
               File uploaded successfully
             </p>
           ): (
-            <p>
+            <p className="ant-upload-text">
               Click or drag your Application Letter here to upload
             </p>
           ) }
