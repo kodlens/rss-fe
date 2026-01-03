@@ -3,7 +3,7 @@ import { Form, Input, Select } from 'antd'
 const PersonalInfo = () => {
     return (
         // parent container
-        <div className='border border-gray-200 rounded-xl'>
+        <div className='border border-gray-200 rounded-xl bg-white shadow'>
 
             {/* title bar */}
             <div className='bg-blue-900 text-white font-bold p-4 rounded-t-xl'>
@@ -127,7 +127,7 @@ const PersonalInfo = () => {
                         className="w-full"
                         label="Citizenship"
                         rules={[{ required: true, message: 'Please input citizenship' }]}
-                        name="citizenshhip">
+                        name="citizenship">
                         <Input type="text" className="w-full" placeholder="e.g. FILIPINO" />
                     </Form.Item>
                 </div>

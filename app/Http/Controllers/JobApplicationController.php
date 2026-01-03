@@ -30,7 +30,7 @@ class JobApplicationController extends Controller
 
 
     public function store( Request $req, $slug){
-        
+         return $req;
         $req->validate([
             'lname' => ['required', 'string', 'max: 50'],
             'fname' => ['required', 'string', 'max: 50'],
@@ -60,7 +60,7 @@ class JobApplicationController extends Controller
         ]);
 
 
-        return $req;
+       
         
         $jobPosition = JobPosition::with(['status_engagement'])
             ->where('job_position_slug', $slug)

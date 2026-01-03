@@ -1,7 +1,8 @@
 import { Form, Upload, message } from "antd"
 import type { UploadProps } from "antd"
 import axios from "axios"
-import { InboxOutlined } from "@ant-design/icons";
+import { CheckOutlined, InboxOutlined } from "@ant-design/icons";
+import { useState } from "react";
 const { Dragger } = Upload;
 
 const UploadApplicationLetter = () => {
@@ -10,6 +11,7 @@ const UploadApplicationLetter = () => {
     .querySelector('meta[name="csrf-token"]')
     ?.getAttribute('content') ?? ''
 
+  const [isUpload, setIsUpload] = useState(false)
 
   const uploadProps: UploadProps = {
     name: "application_letter",
@@ -41,6 +43,7 @@ const UploadApplicationLetter = () => {
     onChange(info) {
       if (info.file.status === "done") {
         message.success(`${info.file.name} uploaded successfully`)
+        setIsUpload(true)
         //form?.setFieldValue("application_letter", info.file.response)
 
       } else if (info.file.status === "error") {
@@ -60,7 +63,7 @@ const UploadApplicationLetter = () => {
       const tempFile = file.response
 
       if (!tempFile) return
-
+      setIsUpload(false)
       axios.post(`/temp-remove/${tempFile}`).then(res => {
         if (res.data.status === "temp_deleted") {
           message.success("File removed.")
@@ -87,10 +90,19 @@ const UploadApplicationLetter = () => {
 
       <Dragger {...uploadProps}>
         <p className="ant-upload-drag-icon">
-          <InboxOutlined />
+          { isUpload ? <CheckOutlined /> : <InboxOutlined /> }
         </p>
         <p className="ant-upload-text">
-          Click or drag your Application Letter here to upload
+          { isUpload ? (
+            <p className="text-green-700">
+              File uploaded successfully
+            </p>
+          ): (
+            <p>
+              Click or drag your Application Letter here to upload
+            </p>
+          )}
+          
         </p>
         <p className="ant-upload-hint">
           Only PDF files are accepted (maximum size: 1 MB).

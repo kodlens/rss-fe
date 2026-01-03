@@ -49,7 +49,7 @@ const CurrentAddress = ({ form }: MyProps) => {
 
   return (
     // container
-    <div className='border border-gray-200 rounded-xl'>
+    <div className='border border-gray-200 rounded-xl bg-white shadow'>
 
       {/* title bar */}
       <div className='bg-blue-900 text-white font-bold p-4 rounded-t-xl'>
