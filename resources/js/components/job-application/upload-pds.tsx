@@ -1,8 +1,9 @@
-import { Form, Upload, message } from "antd"
+import { App, Form, Upload } from "antd"
 import type { UploadProps } from "antd"
 import axios from "axios"
-import { InboxOutlined } from "@ant-design/icons";
+import { CheckOutlined, InboxOutlined } from "@ant-design/icons";
 import Dragger from "antd/es/upload/Dragger";
+import { useState } from "react";
 
 
 // type Props = {
@@ -11,11 +12,14 @@ import Dragger from "antd/es/upload/Dragger";
 // }
 
 const UploadPds = () => {
+  
+  const { message } = App.useApp();
 
   const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
     ?.getAttribute('content') ?? ''
     
+  const [isUpload, setIsUpload] = useState(false)
   const uploadProps: UploadProps = {
     name: "pds",
     action: "/temp-upload?type=pds",
@@ -46,15 +50,17 @@ const UploadPds = () => {
     onChange(info) {
       if (info.file.status === "done") {
         message.success(`${info.file.name} uploaded successfully`)
+        setIsUpload(true)
        // form?.setFieldValue("featured_image", info.file.response)
 
       } else if (info.file.status === "error") {
 
         const status = info.file.error?.status
         const errors = info.file.response?.errors
+        setIsUpload(false)
 
-        if (status === 422 && errors?.featured_image?.length) {
-          message.error(errors.featured_image[0])
+        if (status === 422 && errors?.pds?.length) {
+          message.error(errors.pds[0])
         } else {
           message.error(`${info.file.name} upload failed`)
         }
@@ -65,6 +71,8 @@ const UploadPds = () => {
       const tempFile = file.response
 
       if (!tempFile) return
+
+      setIsUpload(false)
 
       axios.post(`/temp-remove/${tempFile}`).then(res => {
         if (res.data.status === "temp_deleted") {
@@ -91,11 +99,17 @@ const UploadPds = () => {
     >
       <Dragger {...uploadProps}>
         <p className="ant-upload-drag-icon">
-          <InboxOutlined />
+          { isUpload ? <CheckOutlined /> : <InboxOutlined /> }
         </p>
-        <p className="ant-upload-text">
-          Click or drag your Personal Data Sheet here to upload
-        </p>
+        { isUpload ? (
+            <p className="ant-upload-text text-green-700">
+              File uploaded successfully
+            </p>
+          ): (
+            <p>
+              Click or drag your Application Letter here to upload
+            </p>
+          ) }
         <p className="ant-upload-hint">
           Only PDF files are accepted (maximum size: 1 MB).
         </p>

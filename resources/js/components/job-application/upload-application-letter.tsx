@@ -1,4 +1,4 @@
-import { Form, Upload, message } from "antd"
+import { App, Form, Upload } from "antd"
 import type { UploadProps } from "antd"
 import axios from "axios"
 import { CheckOutlined, InboxOutlined } from "@ant-design/icons";
@@ -6,7 +6,9 @@ import { useState } from "react";
 const { Dragger } = Upload;
 
 const UploadApplicationLetter = () => {
+  const { message } = App.useApp();
 
+  
   const csrfToken = document
     .querySelector('meta[name="csrf-token"]')
     ?.getAttribute('content') ?? ''
@@ -92,18 +94,15 @@ const UploadApplicationLetter = () => {
         <p className="ant-upload-drag-icon">
           { isUpload ? <CheckOutlined /> : <InboxOutlined /> }
         </p>
-        <p className="ant-upload-text">
-          { isUpload ? (
-            <p className="text-green-700">
+        { isUpload ? (
+            <p className="ant-upload-text text-green-700">
               File uploaded successfully
             </p>
           ): (
             <p>
               Click or drag your Application Letter here to upload
             </p>
-          )}
-          
-        </p>
+          ) }
         <p className="ant-upload-hint">
           Only PDF files are accepted (maximum size: 1 MB).
         </p>
