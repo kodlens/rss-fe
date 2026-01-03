@@ -108,7 +108,7 @@ const UploadRelevantTraining: React.FC<Props> = () => {
             </p>
           ): (
             <p className="ant-upload-text">
-              Click or drag your Application Letter here to upload
+              Click or drag your Relevant Training file here to upload
             </p>
           ) }
         <p className="ant-upload-hint">

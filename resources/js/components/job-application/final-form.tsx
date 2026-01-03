@@ -21,7 +21,7 @@ const FinalForm = ({ loading } : Props) => {
   return (
     <>
       <div className="my-4 bg-white shadow p-6 rounded-xl">
-        <div className="font-bold mb-4wd">
+        <div className="font-bold mb-4">
           Data Privacy and Policy
         </div>
         <p>

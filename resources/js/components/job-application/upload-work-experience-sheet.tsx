@@ -91,7 +91,7 @@ const UploadWorkExperienceSheet: React.FC<Props> = () => {
       name="work_experience"
       valuePropName="fileList"
       className="w-full"
-      label="Transcript of Record"
+      label="Work Experience Sheet"
       getValueFromEvent={(e) => {
         // Normalize the value to fit what the Upload component expects
         if (Array.isArray(e)) {
@@ -110,7 +110,7 @@ const UploadWorkExperienceSheet: React.FC<Props> = () => {
             </p>
           ): (
             <p className="ant-upload-text">
-              Click or drag your Application Letter here to upload
+              Click or drag your Work Experience file here to upload
             </p>
           ) }
         <p className="ant-upload-hint">

@@ -104,7 +104,7 @@ const UploadCoe = () => {
             </p>
           ): (
             <p className="ant-upload-text">
-              Click or drag your Application Letter here to upload
+              Click or drag your Certificate of Employment file here to upload
             </p>
           ) }
         <p className="ant-upload-hint">

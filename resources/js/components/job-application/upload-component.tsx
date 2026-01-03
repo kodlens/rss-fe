@@ -5,6 +5,7 @@ import UploadDiploma from './upload-diploma'
 import UploadPds from './upload-pds'
 import UploadRelevantTraining from './upload-relevant-training'
 import UploadTor from './upload-tor'
+import UploadWorkExperienceSheet from './upload-work-experience-sheet'
 
 const UploadComponent = () => {
   return (
@@ -31,6 +32,8 @@ const UploadComponent = () => {
         <UploadRelevantTraining />
 
         <UploadCoe />
+
+        <UploadWorkExperienceSheet />
 
       </div>
 
